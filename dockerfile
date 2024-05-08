@@ -15,9 +15,10 @@ COPY root .
 
 WORKDIR /scripts
 
-RUN chmod +x ./run.sh
+RUN chmod +x ./install_n_update.sh \
+    && ./install_n_update.sh
 
 EXPOSE 27015/udp
 EXPOSE 27016/udp
 
-CMD ./run.sh
+entrypoint ["/entrypoint.sh"]
