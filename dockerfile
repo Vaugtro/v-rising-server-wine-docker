@@ -11,14 +11,23 @@ RUN dpkg --add-architecture i386 \
     && mkdir -p /root/.wine/drive_c/VRisingServer/ \
     && cd /root/.wine/drive_c/steamcmd 
 
-COPY root .
+add ./scripts /scripts
 
 WORKDIR /scripts
 
-RUN chmod +x ./install_n_update.sh \
-    && ./install_n_update.sh
+RUN chmod +x init.sh
+RUN ./init.sh
 
-EXPOSE 27015/udp
+# 27015 Game port
+EXPOSE 27015/udp 
+
+# 27016 Query port
 EXPOSE 27016/udp
 
-entrypoint ["/entrypoint.sh"]
+# 27017 Fallback port
+EXPOSE 27017/udp
+
+# 25575 RCON port
+EXPOSE 25575/tcp
+
+entrypoint ["/scripts/entrypoint.sh"]

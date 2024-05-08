@@ -2,12 +2,17 @@ version: "2.1"
 services: 
   vrising:
     container_name: vrising-server
-    image: vrising:latest
+    build: 
+      context: .
+      dockerfile: Dockerfile
     volumes: 
       - ./saves:/root/.wine/drive_c/users/root/AppData/LocalLow/Stunlock Studios/VRisingServer/Saves
       - ./settings:/root/.wine/drive_c/users/root/AppData/LocalLow/Stunlock Studios/VRisingServer/Settings/
     ports: 
-      - "27015:27015/udp"
-      - "27016:27016/udp"
+      - "27015:27015/udp" # Game
+      - "27016:27016/udp" # Query
+      - "27017:27017/udp" # Fallback
+      - "27018:27018/tcp" # RCON
+      - "9090:9090/tcp" # API
     restart: always
     tty: true
